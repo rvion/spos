@@ -1,0 +1,92 @@
+to build docker images
+
+cd [...]/newspark
+docker build --pull=flase -t newspark .
+
+cd [...]/barespark
+docker build --pull=flase -t barespark .
+
+
+
+
+###################################################
+#all sites must absolutely have
+$cat /etc/hostname
+myhostname
+
+$cat /etc/hosts
+ 127.0.0.1	localhost
+#127.0.1.1	myhostname #NEVER!!
+ 192.168.1.54	myhostname
+
+#to be sure they must pass a cloudera manager install
+###################################################
+
+#on all hosts
+$sudo docker daemon -H tcp://0.0.0.0:2375
+
+
+#on manager host
+$docker run --rm swarm create
+16e6a7fc21cd5a9fae94411b692cd2cd
+
+$docker -H tcp://0.0.0.0:2375 run -d -p 9999:2375 swarm manage token://16e6a7fc21cd5a9fae94411b692cd2cd
+
+
+on every host
+$docker -H tcp://0.0.0.0:2375 run -d swarm join --addr=192.168.1.54:2375 token://16e6a7fc21cd5a9fae94411b692cd2cd
+#to try from on single host
+$docker -H tcp://host1_ip:2375 run -d swarm join --addr=host1_ip:2375 token://16e6a7fc21cd5a9fae94411b692cd2cd
+$docker -H tcp://host1_ip:2375 run -d swarm join --addr=host2_ip:2375 token://16e6a7fc21cd5a9fae94411b692cd2cd
+$etc...
+
+alias dswarm="docker -H tcp://0.0.0.0:9999"
+dswarm rm -f sparkmaster
+dswarm rm -f sparkworker1
+dswarm rm -f sparkworkerxxx
+
+############################################################
+$dswarm run --net=host -d \
+--name sparkmaster\
+ newspark:latest\
+ bash -c "SPARK_MASTER_IP=\$(hostname -I | awk '{print \$1}') ./bin/spark-class org.apache.spark.deploy.master.Master"
+############################################################
+#or to debug
+$dswarm run --net=host --rm -it\
+ --name sparkmaster\
+  newspark:latest \
+bash -c "SPARK_MASTER_IP=\$(hostname -I | awk '{print \$1}') ./bin/spark-class org.apache.spark.deploy.master.Master"
+############################################################
+
+
+############################################################
+
+$MASTER_IP=$(dswarm inspect --format '{{ .Node.IP }}' sparkmaster)
+############################################################
+
+
+
+############################################################
+$dswarm run -d\
+ --name sparkworker1\
+ --net=host \
+ newspark \
+ bash -c "SPARK_LOCAL_IP=\$(hostname -I | awk '{print \$1}') ./bin/spark-class org.apache.spark.deploy.worker.Worker spark://$MASTER_IP:7077"
+# same with sparkworker2 etc...
+#run --rm -it to debug
+############################################################
+
+############################################################
+$dswarm run --rm -it\
+ --net=host\
+ newspark \
+ bash -c "SPARK_LOCAL_IP=\$(hostname -I | awk '{print \$1}') ./bin/spark-shell --master spark://$MASTER_IP:7077"
+
+############################################################
+scala> val NUM_SAMPLES=Math.pow(10,8).toInt
+    val count = sc.parallelize(1 until NUM_SAMPLES,40).map { i => val 
+       x = Math.random() * 2 - 1
+       val y = Math.random() * 2 - 1
+       if (x*x + y*y < 1) 1 else 0
+    }.reduce(_ + _)
+    println("Pi is roughly " + 4.0 * count / NUM_SAMPLES)
