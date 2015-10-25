@@ -1,11 +1,4 @@
-to build docker images
-
-cd [...]/newspark
-docker build --pull=flase -t newspark .
-
-cd [...]/barespark
-docker build --pull=flase -t barespark .
-
+#see docker hub randompulse/newspark and randompulse/barespark
 
 
 
@@ -46,16 +39,18 @@ dswarm rm -f sparkworker1
 dswarm rm -f sparkworkerxxx
 
 ############################################################
-$dswarm run --net=host -d \
---name sparkmaster\
- newspark:latest\
+$dswarm run\
+ --net=host -d \
+ --name sparkmaster\
+ randompulse/newspark:latest\
  bash -c "SPARK_MASTER_IP=\$(hostname -I | awk '{print \$1}') ./bin/spark-class org.apache.spark.deploy.master.Master"
 ############################################################
 #or to debug
-$dswarm run --net=host --rm -it\
+$dswarm run\
+ --net=host --rm -it\
  --name sparkmaster\
-  newspark:latest \
-bash -c "SPARK_MASTER_IP=\$(hostname -I | awk '{print \$1}') ./bin/spark-class org.apache.spark.deploy.master.Master"
+  randompulse/newspark:latest \
+  bash -c "SPARK_MASTER_IP=\$(hostname -I | awk '{print \$1}') ./bin/spark-class org.apache.spark.deploy.master.Master"
 ############################################################
 
 
@@ -67,19 +62,21 @@ $MASTER_IP=$(dswarm inspect --format '{{ .Node.IP }}' sparkmaster)
 
 
 ############################################################
-$dswarm run -d\
+$dswarm run\
+ -d\
  --name sparkworker1\
  --net=host \
- newspark \
+ randompulse/newspark:latest \
  bash -c "SPARK_LOCAL_IP=\$(hostname -I | awk '{print \$1}') ./bin/spark-class org.apache.spark.deploy.worker.Worker spark://$MASTER_IP:7077"
 # same with sparkworker2 etc...
 #run --rm -it to debug
 ############################################################
 
 ############################################################
-$dswarm run --rm -it\
+$dswarm run\
+ --rm -it\
  --net=host\
- newspark \
+ randompulse/newspark:latest \
  bash -c "SPARK_LOCAL_IP=\$(hostname -I | awk '{print \$1}') ./bin/spark-shell --master spark://$MASTER_IP:7077"
 
 ############################################################
