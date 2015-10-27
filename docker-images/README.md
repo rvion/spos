@@ -1,13 +1,13 @@
 ## spark images
 
+#### Based on Ubuntu
+
+ - [spark-full](/docker-images/spark-full/Dockerfile) : complete spark image with haddop, sparl and hdfs
+
 #### based on Java:8
 
  - [spark-bare](/docker-images/spark-bare/Dockerfile) : image only contains spark
  - [spark-fixed-ports](/docker-images/spark-fixed-ports/Dockerfile) : spark-bare + some config
- 
-#### Based on Ubuntu
-
- - [spark-full](/docker-images/spark-full/Dockerfile) : complete spark image with haddop, sparl and hdfs
 
 ## How to use
 
@@ -28,3 +28,7 @@ docker push randompulse/spark-bare
 docker push randompulse/spark-fixed-ports
 docker push randompulse/spark-full
 ```
+
+#### quick test
+
+the `spark-full` image is also available on `docker-hub` as `rvion/spark`
