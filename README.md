@@ -4,9 +4,9 @@ This repository host...
 
 see [docker-images](/docker-images) for spark and hadoop related dockerfiles
 
-see [architecture-swarm](https://github.com/rvion/spos/tree/spark-examples/architecture-swarm) for scripts to deploy `spark` on `docker swarm` cluster with `docker compose`
+see [architecture-swarm](/architecture-swarm) for scripts to deploy `spark` on `docker swarm` cluster with `docker compose`
 
-see [architecture-simple](https://github.com/rvion/spos/tree/spark-examples/architecture-simple) for scripts to deploy `spark` on any cluster with `docker`
+see [architecture-simple](/architecture-simple) for scripts to deploy `spark` on any cluster with `docker`
 
 #### Hadoop
 
