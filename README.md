@@ -12,4 +12,4 @@ see [architecture-simple](/architecture-simple) for scripts to deploy `spark` on
 
 Scripts and images above are targetting `Haddop 1`, but only a few lines have to be changed to update it for `Hadoop 2`.
 
-![Alt text](/img/hadoop.png?raw=true "Hadoop 1 vs 2")
+![Alt text](/tmp/hadoop.png?raw=true "Hadoop 1 vs 2")
