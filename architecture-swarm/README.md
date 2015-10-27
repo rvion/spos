@@ -1,5 +1,8 @@
 # Apache Spark on Docker Swarm
 
+### Step 1: register all machines with docker-machine
+
+### Step 2: Create swarm
 ### Swarm Configuration
 
 #all sites must absolutely have
@@ -93,4 +96,17 @@ val count = sc.parallelize(1 until NUM_SAMPLES,40).map { i => val
    if (x*x + y*y < 1) 1 else 0
 }.reduce(_ + _)
 println("Pi is roughly " + 4.0 * count / NUM_SAMPLES)
+```
+
+
+
+#### reminder:
+
+```shell
+# $0 is the name of the command
+# $1 first parameter
+# $2 second parameter
+# $3 third parameter etc. etc
+# $# total number of parameters
+# $@ all the parameters will be listed
 ```
