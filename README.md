@@ -2,7 +2,7 @@
 
 This repository host...
 
-see [docker-images](https://github.com/rvion/spos/tree/spark-examples/docker-images) for spark and hadoop related dockerfiles
+see [docker-images](/docker-images) for spark and hadoop related dockerfiles
 
 see [architecture-swarm](https://github.com/rvion/spos/tree/spark-examples/architecture-swarm) for scripts to deploy `spark` on `docker swarm` cluster with `docker compose`
 
