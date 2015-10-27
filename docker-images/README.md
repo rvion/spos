@@ -1,15 +1,22 @@
 ## spark images
 
- - barespark: image only contains spark
- - newspark: barespark + some config
- - easyspark: complete spark image with hdfs
+#### based on Java:8
 
+ - [spark-bare](spark-bare/Dockerfile) : image only contains spark
+ - [spark-fixed-ports](spark-fixed-ports/Dockerfile) : spark-bare + some config
+ 
+#### Based on Ubuntu
+
+ - [spark-full](spark-full/Dockerfile) : complete spark image with haddop, sparl and hdfs
+
+## How to use
 
 #### Building
 
 ```shell
-docker build -t randompulse/newspark ./newspark
-docker build -t randompulse/barespark ./barespark
+docker build -t randompulse/spark-bare ./spark-bare
+docker build -t randompulse/spark-fixed-ports ./spark-fixed-ports
+docker build -t randompulse/spark-full ./spark-full
 ```
 
 #### Uploading
@@ -17,17 +24,7 @@ docker build -t randompulse/barespark ./barespark
 After the images are built, you can upload them like that:
 
 ```shell
-docker push randompulse/newspark
-docker push randompulse/barespark
-```
-
-#### Using
-
-[randompulse/newspark](https://hub.docker.com/r/randompulse/newspark/) and 
-[randompulse/barespark](https://hub.docker.com/r/randompulse/barespark/) are also available on docker-hub 
-
-You can thus run it direclty:
-
-```shell
-docker run -it --rm randompulse/barespark bash
+docker push randompulse/spark-bare
+docker push randompulse/spark-fixed-ports
+docker push randompulse/spark-full
 ```
