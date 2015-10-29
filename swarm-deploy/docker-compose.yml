@@ -6,7 +6,7 @@
 base:
   image: rvion/spark
   net: host
-  env:
+  environment:
     MASTER_PATH: ${SPARK_MASTER_HOST}
 
 master:
