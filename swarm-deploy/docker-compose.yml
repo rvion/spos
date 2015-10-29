@@ -4,7 +4,7 @@
 #   https://github.com/docker/compose/blob/129092b7/docs/yml.md#variable-substitution
 
 base:
-  image: rvion/spark
+  image: rvion/spark:0.1
   net: host
   environment:
     MASTER_PATH: 192.168.99.100:7077
