@@ -12,24 +12,14 @@ base:
 master:
   extends:
     service: base
-  command:
-  - SPARK_LOCAL_IP=$(/spark/getIpOnInterface.sh eth1)
-  - bin/spark-class
-  - org.apache.spark.deploy.master.Master
+  command: ./start-master.sh
 
 worker:
   extends:
     service: base
-  command:
-  - SPARK_LOCAL_IP=$(/spark/getIpOnInterface.sh eth1)
-  - bin/spark-class
-  - org.apache.spark.deploy.worker.Worker
-  - spark://$SPARK_MASTER_HOST:7077
+  command: ./start-worker.sh
 
 shell:
   extends:
     service: base
-  command:
-  - SPARK_LOCAL_IP=$(/spark/getIpOnInterface.sh eth1)
-  - bin/spark-shell
-  - --master spark://$SPARK_MASTER_HOST:7077
+  command: ./start-shell.sh
