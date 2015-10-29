@@ -22,7 +22,9 @@
      eval $(docker-machine env --swarm smaster)
      ```
      
-  4. __play with docker-compose__: `docker-compose ` {up, scale, logs, restart, etc.} :pizza:
+  4. __play with docker-compose__: `docker-compose ` {up, scale, logs, restart, etc.}
+
+     :warning: ensure you correctly `stop` and `rm` containers when you want to update your services, not to restart previously created ones
 
 
 :warning: Look at the scripts before running them. 
