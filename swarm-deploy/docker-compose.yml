@@ -22,6 +22,6 @@ worker:
 shell:
   extends:
     service: base
-  command: ./start-shell.sh  command: ./start-shell.sh
+  command: ./start-shell.sh
 
 # docker run --net=host -it --rm rvion/spark SPARK_LOCAL_IP=$(/spark/getIpOnInterface.sh eth1) bin/spark-class org.apache.spark.deploy.master.Master
