@@ -1,5 +1,8 @@
 ## spark images
 
+:warning: Images are not yet published with proper versionning, so you should
+better build the image yourself than rely on published ones if you want it to work :)
+
 #### Based on Ubuntu
 
  - [spark-full](/docker-images/spark-full/Dockerfile) : complete spark image with haddop, sparl and hdfs
