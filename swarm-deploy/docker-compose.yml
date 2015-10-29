@@ -7,7 +7,7 @@ base:
   image: rvion/spark
   net: host
   environment:
-    MASTER_PATH: ${SPARK_MASTER_HOST}
+    MASTER_PATH: 192.168.99.100:7077
 
 master:
   extends:
