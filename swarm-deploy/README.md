@@ -31,6 +31,11 @@
 Some of them need some env variables to work properly, like 
 `SPARK_MASTER_HOST`
 
+:warning: docker-compose 1.5 (check with --version) is needed for `docker-compose.yml` env variable interpolation.
+On _Windows_ and _Mac_, you need to install a recent https://github.com/docker/toolbox/releases (probably beta)
+You can also write direclty the `SPARK_MASTER_HOST` env value if you prefer
+
+
 ------------
 
 ##### Example scala code:
