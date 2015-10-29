@@ -12,6 +12,7 @@ docker-machine create \
   --driver=virtualbox \
   --virtualbox-disk-size "12000" \
   --virtualbox-memory "1024" \
+  --engine-label master=true \
   --swarm --swarm-discovery token://$SWARM_TOKEN \
   --swarm-master \
   mm

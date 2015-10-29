@@ -1,5 +1,8 @@
 # Apache Spark on Docker Swarm
 
+:warning: I'm not quite sure the [container/host affinity](https://github.com/docker/swarm/tree/master/scheduler/filter#affinity-filter) system is correctly setup. It means that spark-master will maybe not be correcly deployed on the right machine as of now.
+This will be fixed soon.
+
 #### Steps are:
 
   1. __Have some machines__ (physical machines or VMs or both)

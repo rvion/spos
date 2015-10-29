@@ -3,6 +3,8 @@
 #   https://blog.docker.com/2015/02/scaling-docker-with-swarm/
 #   https://github.com/docker/compose/blob/129092b7/docs/yml.md#variable-substitution
 
+# https://github.com/docker/swarm/tree/master/scheduler/filter#affinity-filter
+
 base:
   image: rvion/spark:0.1
   net: host
@@ -14,6 +16,8 @@ master:
   extends:
     service: base
   command: ./start-master.sh
+  environment:
+    affinity:master==true
 
 worker:
   extends:
