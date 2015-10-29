@@ -8,6 +8,7 @@ base:
   net: host
   environment:
     MASTER_PATH: 192.168.99.100:7077
+    # MASTER_PATH: ${SPARK_MASTER_HOST}
 
 master:
   extends:
