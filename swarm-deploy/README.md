@@ -22,8 +22,12 @@
      eval $(docker-machine env --swarm smaster)
      ```
      
-     
   4. __play with docker-compose__: `docker-compose ` {up, scale, logs, restart, etc.} :pizza:
+
+
+:warning: Look at the scripts before running them. 
+Some of them need some env variables to work properly, like 
+`SPARK_MASTER_HOST`
 
 ------------
 
