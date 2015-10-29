@@ -3,6 +3,7 @@
 #### Based on Ubuntu
 
  - [spark-full](/docker-images/spark-full/Dockerfile) : complete spark image with haddop, sparl and hdfs
+ - [spark-full-anaconda](/docker-images/spark-full-anaconda/Dockerfile) : same as above + anaconda / python3
 
 #### based on Java:8
 
@@ -31,4 +32,7 @@ docker push randompulse/spark-full
 
 #### quick test
 
-the `spark-full` image is also available on `docker-hub` as `rvion/spark`
+Some of those images are also available on `docker-hub` :
+
+  - `spark-full` is available as `rvion/spark`
+  - `spark-full-anaconda` is available as `rvion/spark-anaconda`

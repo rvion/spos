@@ -9,3 +9,6 @@
 Scripts and images above are targetting `Haddop 1`, but only a few lines have to be changed to update it for `Hadoop 2`.
 
 ![Alt text](http://media.bestofmicro.com/X/8/430172/original/yarn.png "Hadoop 1 vs 2")
+
+
+<!-- add ANACONDA python -->
