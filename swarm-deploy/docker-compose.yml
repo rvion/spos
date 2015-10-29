@@ -3,27 +3,33 @@
 #   https://blog.docker.com/2015/02/scaling-docker-with-swarm/
 #   https://github.com/docker/compose/blob/129092b7/docs/yml.md#variable-substitution
 
-master:
-  image: snufkin/spark-base
+base:
+  image: rvion/spark
   net: host
+  env:
+    SPARK_MASTER_HOST: ${SPARK_MASTER_HOST}
+
+master:
+  extends:
+    service: base
   command:
+  - SPARK_LOCAL_IP=$(/spark/getIpOnInterface.sh eth1)
   - bin/spark-class
   - org.apache.spark.deploy.master.Master
 
 worker:
-  image: snufkin/spark-base
-  net: host
+  extends:
+    service: base
   command:
+  - SPARK_LOCAL_IP=$(/spark/getIpOnInterface.sh eth1)
   - bin/spark-class
   - org.apache.spark.deploy.worker.Worker
-  - spark://${SPARK_MASTER_HOST}:7077
+  - spark://$SPARK_MASTER_HOST:7077
 
 shell:
-  image: snufkin/spark-base
-  net: host
+  extends:
+    service: base
   command:
+  - SPARK_LOCAL_IP=$(/spark/getIpOnInterface.sh eth1)
   - bin/spark-shell
-  - --master spark://${${SPARK_MASTER_HOST}}:7077
-
-
-# /spark/bin/spark-class org.apache.spark.deploy.master.Master
+  - --master spark://$SPARK_MASTER_HOST:7077

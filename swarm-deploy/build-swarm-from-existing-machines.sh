@@ -4,29 +4,45 @@ set -e # fail when any subcommand fails
 set -u # fail when an unknown variable is referenced
 source log.sh # small utilities to log things
 
-master='olivier-All-Series'
-workers='olivier-Bell olivier-Aspire-M7811'
+SPARK_MASTER_HOST='olivier-All-Series'
+hosts='olivier-All-Series olivier-Bell olivier-Aspire-M7811'
 
-docker-machine create \
-    --driver generic \ 
-    --generic-ip-address $(dig +short $master) \
-    --generic-ssh-user $USER \
-    --generic-ssh-key "/Users/$USER/.ssh/id_rsa" \
-    --engine-label master=true
-    --swarm \
-    --swarm-master \
-    --swarm-discovery token://$SWARM_TOKEN \
-    mm
+# Note 1:
+#   dig is a DNS lookup utility
+#   $(dig +short $SPARK_MASTER_HOST) gets $SPARK_MASTER_HOST ip from the DNS
 
-i=1
-for host in $workers
-do 
-	docker-machine create \
-	    --driver generic \ 
-	    --generic-ip-address $(dig +short $host) \
-	    --generic-ssh-user $USER \
-	    --generic-ssh-key "/Users/$USER/.ssh/id_rsa" \
-	    --engine-label worker=true
-	    m$i
-	i=$(($i + 1))
+# Note 2:
+#   Fun script to read about:
+#   https://gist.github.com/oscarrenalias/becea3726edd67edb307
+
+# Note 3:
+#   One should also check swarm service discovery options
+#   --consul-.., --etcd-.., etc.
+
+SWARM_TOKEN=$(docker run --rm swarm create)
+
+for host in $hosts
+do
+    if [ "$host" == "$SPARK_MASTER_HOST" ]; then
+        docker-machine create \
+            --driver generic \
+            --generic-ip-address $(dig +short $host) \
+            --generic-ssh-user $USER \
+            --generic-ssh-key "/Users/$USER/.ssh/id_rsa" \
+            --engine-label master=true \
+            --engine-label worker=false \
+            --swarm --swarm-discovery token://$SWARM_TOKEN \
+            --swarm-master \
+            $hosts
+    else
+        docker-machine create \
+            --driver generic \
+            --generic-ip-address $(dig +short $host) \
+            --generic-ssh-user $USER \
+            --generic-ssh-key "/Users/$USER/.ssh/id_rsa" \
+            --engine-label worker=true \
+            --engine-label master=false \
+            --swarm --swarm-discovery token://$SWARM_TOKEN \
+            $host
+    fi
 done
