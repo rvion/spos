@@ -19,7 +19,7 @@ This will be fixed soon.
      swarm-agent-00            virtualbox   Stopped         smaster
      ```
      
-  3. __Point your docker client to talk to the swarm __
+  3. __Point your docker client to talk to the swarm__
      Assuming `smaster` is the name of the host running smaster:
      ```shell
      eval $(docker-machine env --swarm smaster)
